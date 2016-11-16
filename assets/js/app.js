@@ -5,6 +5,9 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import { Router, Route, Link, browserHistory, hashHistory } from 'react-router'
 import { Nav, Jumbotron, HomeContents } from './components'
+import * as Boot from 'react-bootstrap' // read up @ https://react-bootstrap.github.io/components.html
+
+console.log(Boot) // what hast thou provided?
 
 // Utility methods
 // --------------
