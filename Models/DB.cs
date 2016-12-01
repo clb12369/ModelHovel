@@ -22,7 +22,7 @@ public class DbFactory : IDbContextFactory<DB> {
     }
 }
 
-public partial class DB : IdentityDbContext<IdentityUser> {
+public partial class DB : IdentityDbContext<ApplicationUser> {
     public DB(DbContextOptions<DB> options): base(options){}
 }
 

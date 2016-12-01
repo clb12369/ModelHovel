@@ -45,7 +45,7 @@ public class Board : HasId {
 }
 
 // declare the DbSet<T>'s of our DB context, thus creating the tables
-public partial class DB : IdentityDbContext<IdentityUser> {
+public partial class DB : IdentityDbContext<ApplicationUser> {
     public DbSet<Card> Cards { get; set; }
     public DbSet<CardList> CardLists { get; set; }
     public DbSet<Board> Boards { get; set; }
