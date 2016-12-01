@@ -18,6 +18,13 @@
         <input asp-for="UserName" class="form-control"/>
         <span asp-validation-for="UserName"></span>
     </div>
+    <select asp-for="ModelingInterest" class="form-control" placeholder="Select Main Interest">
+        <option>Aircraft</option>
+        <option>Armor</option>
+        <option>Naval</option>
+        <option>Cars &amp; Trucks</option>
+        <option>Dioramas</option>
+    </select>
     <div class="form-group">
         <label asp-for="Email"class="col-md-2 control-label"></label>
         <input asp-for="Email" class="form-control"/>

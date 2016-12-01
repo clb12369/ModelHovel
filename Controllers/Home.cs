@@ -8,9 +8,22 @@ using System;
 [Route("/")]
 public class HomeController : Controller
 {
+    private DbSet<ApplicationUser> users;
+
+    public HomeController(DbSet<ApplicationUser> users){
+        this.users = users;
+    }
+
     [HttpGet]
-    public IActionResult Root()
+    // public IActionResult Root()
+    // {
+    //     return View("Empty"); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
+    // }
+
+    [Route("accounts")]
+    [HttpGet]
+    public IActionResult Index()
     {
-        return View("Empty"); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
+        return View(users);
     }
 }

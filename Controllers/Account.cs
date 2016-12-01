@@ -22,12 +22,12 @@ public class AccountController : Controller
     }
 
     [HttpGet]
-    public IActionResult Root()
-    {
-        // HttpContext.User
-        return Ok();
-    }
-
+    // public IActionResult Root()
+    // {
+    //     // HttpContext.User
+    //     return Ok();
+    // }
+    
     [HttpGet("register")]
     [AllowAnonymous]
     public IActionResult Register()
@@ -45,7 +45,7 @@ public class AccountController : Controller
 
         var errors = await auth.Register(user.FirstName, user.LastName, user.UserName, user.Email, user.Password, user.ModelingInterest);
         if((errors ?? new List<string>()).Count() == 0)
-            return Redirect("/account");
+            return Redirect("/account/{id}");
         
         foreach(var e in errors) ModelState.AddModelError("", e);
         return View("RegisterOrLogin", user);
@@ -63,13 +63,13 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromForm] LoginView user)
     {
-        ViewData["Action"] = "Login";
+        // ViewData["Action"] = "Login";
 
         if (!ModelState.IsValid) return View("RegisterOrLogin", user);
 
         string result = await auth.Login(user.Email, user.Password);
         if(result == null){
-            return Redirect("/account");
+            return View("Register");
         }
 
         ModelState.AddModelError("", result);
@@ -93,22 +93,22 @@ public class RegisterView
     [Display(Name = "Last Name")]
     public string LastName { get; set; }
     [Required]
-    [DisplayAttribute(Name = "Username")]
+    [Display(Name = "Username")]
     public string UserName { get; set; }
     [Required]
-    [DisplayAttribute(Name = "Email Address")]
+    [Display(Name = "Email Address")]
     [EmailAddress]
     public string Email { get; set; }
     [Required]
-    [DisplayAttribute(Name = "Password")]
+    [Display(Name = "Password")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
     [Required]
-    [DisplayAttribute(Name = "Confirm Password")]
+    [Display(Name = "Confirm Password")]
     [DataType(DataType.Password)]
     [Compare("Password", ErrorMessage = "The passwords do not match.")]
     public string ConfirmPassword { get; set; }
-    [DisplayAttribute(Name = "Main Interests")]
+    [Display(Name = "Main Interests")]
     public string ModelingInterest { get; set; }
 }
 
