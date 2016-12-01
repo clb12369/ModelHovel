@@ -38,7 +38,7 @@ public class AccountController : Controller
 
     [HttpPost("register")]
     [AllowAnonymous]
-    public async Task<IActionResult> Register([FromForm] UserView user)
+    public async Task<IActionResult> Register([FromForm] RegisterView user)
     {
         // ViewData["Action"] = "Register";
         if(!ModelState.IsValid) return View(user);
@@ -61,7 +61,7 @@ public class AccountController : Controller
 
     [HttpPost("login")]
     [AllowAnonymous]
-    public async Task<IActionResult> Login([FromForm] UserView user)
+    public async Task<IActionResult> Login([FromForm] LoginView user)
     {
         ViewData["Action"] = "Login";
 
@@ -84,23 +84,43 @@ public class AccountController : Controller
     }
 }
 
-public class UserView
+public class RegisterView
 {
     [Required]
+    [Display(Name = "First Name")]
     public string FirstName { get; set; }
     [Required]
+    [Display(Name = "Last Name")]
     public string LastName { get; set; }
     [Required]
+    [DisplayAttribute(Name = "Username")]
     public string UserName { get; set; }
     [Required]
+    [DisplayAttribute(Name = "Email Address")]
     [EmailAddress]
     public string Email { get; set; }
     [Required]
+    [DisplayAttribute(Name = "Password")]
     [DataType(DataType.Password)]
     public string Password { get; set; }
     [Required]
+    [DisplayAttribute(Name = "Confirm Password")]
     [DataType(DataType.Password)]
     [Compare("Password", ErrorMessage = "The passwords do not match.")]
     public string ConfirmPassword { get; set; }
+    [DisplayAttribute(Name = "Main Interests")]
     public string ModelingInterest { get; set; }
+}
+
+public class LoginView
+{
+    [Required]
+    [DisplayAttribute(Name = "Email Address")]
+    [EmailAddress]
+    public string Email { get; set; }
+    [Required]
+    [DisplayAttribute(Name = "Password")]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
+
 }
