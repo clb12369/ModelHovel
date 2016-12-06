@@ -15,24 +15,24 @@ using Microsoft.AspNetCore.Mvc.Routing;
 public interface IAuthService {
     Task<string> Login(string email, string pass);
     Task Logout();
-    Task<IEnumerable<string>> Register(string email, string pass);
+    Task<IEnumerable<string>> Register(string firstname, string lastname, string username, string email, string pass, string modelingInterest);
     Task<bool> ResetPassword(string email, Func<Object, string> getCallbackUrl);
-    Task<IdentityUser> GetUser(HttpContext context);
+    Task<ApplicationUser> GetUser(HttpContext context);
 }
 
 public class AuthService : IAuthService {
-    private UserManager<IdentityUser> u;
-    private SignInManager<IdentityUser> s;
+    private UserManager<ApplicationUser> u;
+    private SignInManager<ApplicationUser> s;
     private IEmail emailer;
 
-    public AuthService(UserManager<IdentityUser> u, SignInManager<IdentityUser> s, IEmail emailer){
+    public AuthService(UserManager<ApplicationUser> u, SignInManager<ApplicationUser> s, IEmail emailer){
         this.u = u;
         this.s = s;
         this.emailer = emailer;
     }
 
-    public async Task<string> Login(string email, string pass){
-        var result = await s.PasswordSignInAsync(email, pass, true, lockoutOnFailure: false);
+    public async Task<string> Login(string username, string pass){
+        var result = await s.PasswordSignInAsync(username, pass, true, lockoutOnFailure: false);
         if(!result.Succeeded) 
             return "Invalid login attempt.";
         if(result.RequiresTwoFactor)
@@ -42,8 +42,8 @@ public class AuthService : IAuthService {
         return null;
     }
 
-    public async Task<IEnumerable<string>> Register(string email, string pass){
-        var user = new IdentityUser { UserName = email, Email = email };
+    public async Task<IEnumerable<string>> Register(string firstname, string lastname, string username, string email, string pass, string modelingInterest){
+        var user = new ApplicationUser { FirstName = firstname, LastName = lastname, UserName = username, Email = email, ModelingInterest = modelingInterest };
         var result = await u.CreateAsync(user, pass);
         if(result.Succeeded){
             await s.SignInAsync(user, isPersistent: true);
@@ -75,5 +75,5 @@ public class AuthService : IAuthService {
         return true;
     }
 
-    public async Task<IdentityUser> GetUser(HttpContext context) => await u.GetUserAsync(context.User);
+    public async Task<ApplicationUser> GetUser(HttpContext context) => await u.GetUserAsync(context.User);
 }

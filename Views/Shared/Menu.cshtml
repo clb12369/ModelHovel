@@ -1,4 +1,4 @@
-<div class="menu">
+<!--<div class="menu">
     <a href="/" class="logo">My Site</a>
 
     <ul>
@@ -16,8 +16,31 @@
             </li>
         } else {
             <li>
-                <a href="/account/login">Register or Sign In</a>
+                <a href="/account/login">Sign In</a>
+                <a href="/account/register">Sign Up</a>
             </li>
         }
     </ul>
-</div>
+</div>-->
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Model Hovel</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                </ul>
+                @await Html.PartialAsync("_LoginPartial")
+            </div>
+        </div>
+    </div>

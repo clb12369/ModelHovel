@@ -53,7 +53,7 @@ public partial class Handler {
     // --------------------------------------------------------
     protected SessionOptions _session = SessionOptions.Identity;
     protected bool _convertConnectionString = true;
-    protected DatabaseOptions _db = DatabaseOptions.InMemory;
+    protected DatabaseOptions _db = DatabaseOptions.Sqlite;
     protected JSOptions _js = JSOptions.None;
     protected RestfulOptions _restful = RestfulOptions.CORS;
     protected SwaggerOptions _swagger = SwaggerOptions.UI;
@@ -110,7 +110,11 @@ public partial class Handler {
         
         switch(_session){
             case SessionOptions.Identity:
-                services.AddIdentity<IdentityUser, IdentityRole>()
+                // configure Identity for int Id
+                // services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+                //     .AddEntityFrameworkStores<DB, int>()
+                //     .AddDefaultTokenProviders();
+                services.AddIdentity<ApplicationUser, IdentityRole>()
                         .AddEntityFrameworkStores<DB>()
                         .AddDefaultTokenProviders();
                 
@@ -184,7 +188,7 @@ public partial class Handler {
                 break;
         }
 
-        RegisterRepos(services);
+        //RegisterRepos(services);
 
         switch(_swagger){
             case SwaggerOptions.JSON:

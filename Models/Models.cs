@@ -11,53 +11,59 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-public class Card : HasId
+public class StashItem : HasId
 {
+    [Key]
     [Required]
-    public int Id { get; set; }
+    public int ItemID { get; set; }
+    public string ItemType { get; set; }
+    public string Manufacturer { get; set; }
+    public string ItemNumber { get; set; }
+    public string Scale { get; set; }
+    public int ItemName {get;set;}
+    public string Comments { get; set; }
+    public int ListId { get; set; }
+    public StashList List { get; set; }
+
+    // public int UserID { get; set; }
+    // public ApplicationUser User { get; set; }
+
+}
+
+public class StashList : HasId {
+    [Key]
+    [Required]
+    public int ItemID { get; set; }
     [Required]
     public string Title { get; set; }
     [Required]
-    [StringLength(250, MinimumLength = 10)]
-    public string Text { get; set; }
-
-    public int CardListId {get;set;}
+    public List<StashItem> StashItems { get; set; }
+    public string UserId { get; set; }
+    public ApplicationUser User { get; set; } = new ApplicationUser();
 }
 
-public class CardList : HasId {
-    [Required]
-    public int Id { get; set; }
-    [Required]
-    public string Summary { get; set; }
-    [Required]
-    public List<Card> Cards { get; set; }
-
-    public int BoardId {get;set;}
-}
-
-public class Board : HasId {
-    [Required]
-    public int Id { get; set; }
-    [Required]
-    public string Title { get; set; }
-    [Required]
-    public List<CardList> Lists { get; set; }
-}
+// public class Board : HasId {
+//     [Required]
+//     public int Id { get; set; }
+//     [Required]
+//     public string Title { get; set; }
+//     [Required]
+//     public List<CardList> Lists { get; set; }
+// }
 
 // declare the DbSet<T>'s of our DB context, thus creating the tables
-public partial class DB : IdentityDbContext<IdentityUser> {
-    public DbSet<Card> Cards { get; set; }
-    public DbSet<CardList> CardLists { get; set; }
-    public DbSet<Board> Boards { get; set; }
+public partial class DB : IdentityDbContext<ApplicationUser> {
+    public DbSet<ApplicationUser> Members { get; set; }
+    public DbSet<StashList> Lists { get; set; }
+    public DbSet<StashItem> Items { get; set; }
 }
 
 // create a Repo<T> services
 public partial class Handler {
     public void RegisterRepos(IServiceCollection services){
-        Repo<Card>.Register(services, "Cards");
-        Repo<CardList>.Register(services, "CardLists",
-            d => d.Include(l => l.Cards));
-        Repo<Board>.Register(services, "Boards",
-            d => d.Include(b => b.Lists).ThenInclude(l => l.Cards));
+        Repo<StashItem>.Register(services, "Items");
+        Repo<StashList>.Register(services, "Lists");
+        Repo<ApplicationUser>.Register(services, "Members",
+            d => d.Include(b => b.StashLists).ThenInclude(l => l.StashItems));
     }
 }

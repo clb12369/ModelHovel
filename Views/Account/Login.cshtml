@@ -1,9 +1,9 @@
-@model UserView
+@model LoginView
 @{
     var a = ViewBag.Action ?? "Register";
 }
 
-<form asp-controller="Account" asp-action="@a">
+<form asp-controller="Account" asp-action="Login">
 
     <div asp-validation-summary="All"></div>
 
@@ -15,5 +15,5 @@
     <input asp-for="Password" />
     <span asp-validation-for="Password"></span>
 
-    <button type="submit">Submit</button>
+    <button type="submit">Login</button>
 </form>

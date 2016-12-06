@@ -18,6 +18,7 @@ DELETE /api/todo/{id}   Delete an item.         None                    None
 
 */
 
+// Removed HasId inheritance
 public abstract class CRUDController<T> : Controller where T: class, HasId
 {
     protected IRepository<T> r;
@@ -47,7 +48,7 @@ public abstract class CRUDController<T> : Controller where T: class, HasId
 
     [HttpPut("{id}")]
     public IActionResult U(int id, [FromBody] T item){
-        if(item.Id != id || !ModelState.IsValid || !r.Update(item))
+        if(item.ItemID != id || !ModelState.IsValid || !r.Update(item))
             return BadRequest();
 
         return Ok();
