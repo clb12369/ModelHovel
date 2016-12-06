@@ -38,8 +38,8 @@ public class StashList : HasId {
     public string Title { get; set; }
     [Required]
     public List<StashItem> StashItems { get; set; }
-    public int UserId { get; set; }
-    public ApplicationUser User { get; set; }
+    public string UserId { get; set; }
+    public ApplicationUser User { get; set; } = new ApplicationUser();
 }
 
 // public class Board : HasId {

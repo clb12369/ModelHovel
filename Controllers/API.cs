@@ -2,10 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-// [Route("/api/accounts")]
-// Removed CRUDController inheritance and changed to Controller
-// public class AccountAPIController : CRUDController<ApplicationUser> {
-//     public AccountAPIController(IRepository<ApplicationUser> r) : base(r){}
+[Route("/api/members")]
+public class AccountAPIController : CRUDController<ApplicationUser> {
+    public AccountAPIController(IRepository<ApplicationUser> r) : base(r){}
 
 
 
@@ -16,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
     //         || card.Text.ToLower().IndexOf(term.ToLower()) != -1
     //     )));
     // }
-// }
+}
 
 // [Route("/api/cardlist")]
 // public class CardListController : CRUDController<CardList> {

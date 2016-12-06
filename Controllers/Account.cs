@@ -45,10 +45,10 @@ public class AccountController : Controller
 
         var errors = await auth.Register(user.FirstName, user.LastName, user.UserName, user.Email, user.Password, user.ModelingInterest);
         if((errors ?? new List<string>()).Count() == 0)
-            return Redirect("/members/{id}");
+            return Redirect("/members/{user.UserName}");
         
         foreach(var e in errors) ModelState.AddModelError("", e);
-        return View("RegisterOrLogin", user);
+        return View("Register", user);
     }
 
     [HttpGet("login")]
@@ -65,15 +65,15 @@ public class AccountController : Controller
     {
         // ViewData["Action"] = "Login";
 
-        if (!ModelState.IsValid) return View("RegisterOrLogin", user);
+        if (!ModelState.IsValid) return View("Login", user);
 
-        string result = await auth.Login(user.Email, user.Password);
+        string result = await auth.Login(user.UserName, user.Password);
         if(result == null){
             return View("Register");
         }
 
         ModelState.AddModelError("", result);
-        return View("RegisterOrLogin", user);
+        return View("MemberDetails", user);
     }
 
     [HttpGet("logout")]

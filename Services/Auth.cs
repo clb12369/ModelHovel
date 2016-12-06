@@ -31,8 +31,8 @@ public class AuthService : IAuthService {
         this.emailer = emailer;
     }
 
-    public async Task<string> Login(string email, string pass){
-        var result = await s.PasswordSignInAsync(email, pass, true, lockoutOnFailure: false);
+    public async Task<string> Login(string username, string pass){
+        var result = await s.PasswordSignInAsync(username, pass, true, lockoutOnFailure: false);
         if(!result.Succeeded) 
             return "Invalid login attempt.";
         if(result.RequiresTwoFactor)

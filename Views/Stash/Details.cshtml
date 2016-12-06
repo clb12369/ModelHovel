@@ -1,0 +1,26 @@
+@model IEnumerable<StashItem>
+
+<div class="bg-primary panel-body">
+    <h4>Current Stash</h4>
+</div>
+
+<table class="table table-condensed table-striped table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Scale</th>
+        <th>Type</th>
+        <th>Manufacturer</th>
+        <th>Item Number</th>
+        <th>Comments</th>
+    </tr>
+    @foreach(StashItem item in Model){
+        <tr>
+            <td>@item.ItemName</td>
+            <td>@item.Scale</td>
+            <td>@item.ItemType</td>
+            <td>@item.Manufacturer</td>
+            <td>@item.ItemNumber</td>
+            <td>@item.Comments</td>
+        </tr>
+    }
+</table>

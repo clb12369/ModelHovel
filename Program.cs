@@ -110,6 +110,10 @@ public partial class Handler {
         
         switch(_session){
             case SessionOptions.Identity:
+                // configure Identity for int Id
+                // services.AddIdentity<ApplicationUser, IdentityRole<int>>()
+                //     .AddEntityFrameworkStores<DB, int>()
+                //     .AddDefaultTokenProviders();
                 services.AddIdentity<ApplicationUser, IdentityRole>()
                         .AddEntityFrameworkStores<DB>()
                         .AddDefaultTokenProviders();

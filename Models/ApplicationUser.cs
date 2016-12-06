@@ -11,4 +11,9 @@ public class ApplicationUser : IdentityUser, HasId
     public string ModelingInterest { get; set; }
     public int ItemID { get; set; }
     public List<StashList> StashLists { get; set; } = new List<StashList>();
+
+    // public void SetItemID(int value)
+    // {
+        
+    // }
 }
