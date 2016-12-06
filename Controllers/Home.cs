@@ -51,13 +51,13 @@ public class HomeController : Controller
         return View(db.Lists.ToList()); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
     }
 
-    [Route("members/{username}/stash/{id}")]
-    [HttpGet]
-    public IActionResult StashDetails(int id)
-    {
-        var list = db.Lists.FirstOrDefault(m => m.ItemID == id);
-        return View(list);
-    }
+    // [Route("members/{username}/stash/{id}")]
+    // [HttpGet]
+    // public IActionResult StashDetails(int id)
+    // {
+    //     var list = db.Lists.FirstOrDefault(m => m.ItemID == id);
+    //     return View(list);
+    // }
 
     [Route("members/{username}/stash/new")]
     [HttpGet]
@@ -75,26 +75,26 @@ public class HomeController : Controller
         return Redirect("/members/{username}/stash");
     }
 
-    [Route("/members/{username}/stash/{id}/new")]
-    [HttpGet]
-    public IActionResult AddToStash() {
-        return View();
-    }
+    // [Route("/members/{username}/stash/{id}/new")]
+    // [HttpGet]
+    // public IActionResult AddToStash() {
+    //     return View();
+    // }
 
-    [Route("members/{username}/stash/{id}/new")]
-    [HttpPost]
-    public IActionResult AddToStash([FromForm] StashItem item, string username, int id){
-        ApplicationUser user = db.Members.FirstOrDefault(m => m.UserName == username);
-        StashList list = user.StashLists.FirstOrDefault(l => l.ItemID == id);
-        TryValidateModel(item);
+    // [Route("members/{username}/stash/{id}/new")]
+    // [HttpPost]
+    // public IActionResult AddToStash([FromForm] StashItem item, string username, int id){
+    //     ApplicationUser user = db.Members.FirstOrDefault(m => m.UserName == username);
+    //     StashList list = user.StashLists.FirstOrDefault(l => l.ItemID == id);
+    //     TryValidateModel(item);
 
-        if (ModelState.IsValid)
-        {
-            user.list.Add(item);
-            db.SaveChanges();
-        }
-        return Redirect($"/members/{username}"); 
-    }
+    //     if (ModelState.IsValid)
+    //     {
+    //         user.list.Add(item);
+    //         db.SaveChanges();
+    //     }
+    //     return Redirect($"/members/{username}"); 
+    // }
 
 
 
