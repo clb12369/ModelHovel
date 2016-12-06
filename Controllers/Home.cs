@@ -8,22 +8,23 @@ using System;
 [Route("/")]
 public class HomeController : Controller
 {
-    private DbSet<ApplicationUser> users;
+    // DbSet<ApplicationUser> users;
+    private DB db;
 
-    public HomeController(DbSet<ApplicationUser> users){
-        this.users = users;
+    public HomeController(DB db){
+        this.db = db;
     }
 
     [HttpGet]
-    // public IActionResult Root()
+    // public IActionResult Index()
     // {
-    //     return View("Empty"); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
+    //     return View(); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
     // }
 
-    [Route("accounts")]
+    // [Route("accounts")]
     [HttpGet]
     public IActionResult Index()
     {
-        return View(users);
+        return View(db.Members.ToList());
     }
 }

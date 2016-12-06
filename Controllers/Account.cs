@@ -45,7 +45,7 @@ public class AccountController : Controller
 
         var errors = await auth.Register(user.FirstName, user.LastName, user.UserName, user.Email, user.Password, user.ModelingInterest);
         if((errors ?? new List<string>()).Count() == 0)
-            return Redirect("/account/{id}");
+            return Redirect("/members/{id}");
         
         foreach(var e in errors) ModelState.AddModelError("", e);
         return View("RegisterOrLogin", user);
@@ -110,14 +110,15 @@ public class RegisterView
     public string ConfirmPassword { get; set; }
     [Display(Name = "Main Interests")]
     public string ModelingInterest { get; set; }
+
+    public string ItemID { get; set; }
 }
 
 public class LoginView
 {
     [Required]
-    [DisplayAttribute(Name = "Email Address")]
-    [EmailAddress]
-    public string Email { get; set; }
+    [DisplayAttribute(Name = "User Name")]
+    public string UserName { get; set; }
     [Required]
     [DisplayAttribute(Name = "Password")]
     [DataType(DataType.Password)]

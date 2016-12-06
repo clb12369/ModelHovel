@@ -7,11 +7,18 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 
+// public interface IApplicationUserRepository {
+//     IEnumerable<ApplicationUser> Users { get; set; }
+// }
+
 public interface HasId {
-    int Id { get; set; }
+    // changed Id to ID to try to get repos to work
+    int ItemID { get; set; }
 }
 
-public interface IRepository<T> where T: class, HasId { 
+// Removed HasId inheritance
+public interface IRepository<T> where T: class, HasId
+{ 
     T Create(T item);
     IEnumerable<T> Read();
     IEnumerable<T> Read(Func<DbSet<T>, IEnumerable<T>> fn);
@@ -21,7 +28,9 @@ public interface IRepository<T> where T: class, HasId {
     IEnumerable<T> FromSql(string sql);
 }
 
-public class Repo<T> : IRepository<T> where T : class, HasId {
+// Removed HasId inheritance
+public class Repo<T> : IRepository<T> where T : class, HasId
+{
 
     protected DB db;
     protected IEnumerable<T> table;
@@ -51,7 +60,7 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
     public T Create(T item){
         dbtable.Add(item);
         db.SaveChanges();
-        return table.FirstOrDefault(x => x.Id == item.Id);
+        return table.FirstOrDefault(x => x.ItemID == item.ItemID);
     }
 
     public IEnumerable<T> Read(){
@@ -63,14 +72,14 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
     }
     
     public T Read(int id){
-        return table.FirstOrDefault(x => x.Id == id);
+        return table.FirstOrDefault(x => x.ItemID == id);
     }
     
     public bool Update(T item){
-        T actual = table.FirstOrDefault(x => x.Id == item.Id);
+        T actual = table.FirstOrDefault(x => x.ItemID == item.ItemID);
         if(actual != null) {
             dbtable.Remove(actual);
-            item.Id = actual.Id;
+            item.ItemID = actual.ItemID;
             dbtable.Add(item);
             db.SaveChanges();
             return true;
@@ -79,7 +88,7 @@ public class Repo<T> : IRepository<T> where T : class, HasId {
     }
     
     public T Delete(int id){
-        T actual = table.FirstOrDefault(x => x.Id == id);
+        T actual = table.FirstOrDefault(x => x.ItemID == id);
         if(actual != null) {
             dbtable.Remove(actual);
             db.SaveChanges();

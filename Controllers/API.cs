@@ -2,17 +2,20 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
-// [Route("/api/card")]
-// public class CardController : CRUDController<Card> {
-//     public CardController(IRepository<Card> r) : base(r){}
+// [Route("/api/accounts")]
+// Removed CRUDController inheritance and changed to Controller
+// public class AccountAPIController : CRUDController<ApplicationUser> {
+//     public AccountAPIController(IRepository<ApplicationUser> r) : base(r){}
 
-//     [HttpGet("search")]
-//     public IActionResult Search([FromQuery]string term, int listId = -1){
-//         return Ok(r.Read(dbset => dbset.Where(card => 
-//             card.Title.ToLower().IndexOf(term.ToLower()) != -1
-//             || card.Text.ToLower().IndexOf(term.ToLower()) != -1
-//         )));
-//     }
+
+
+    // [HttpGet("search")]
+    // public IActionResult Search([FromQuery]string term, int listId = -1){
+    //     return Ok(r.Read(dbset => dbset.Where(card => 
+    //         card.Title.ToLower().IndexOf(term.ToLower()) != -1
+    //         || card.Text.ToLower().IndexOf(term.ToLower()) != -1
+    //     )));
+    // }
 // }
 
 // [Route("/api/cardlist")]

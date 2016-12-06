@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ModelHovel.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20161201195555_RemovedCardRefs")]
-    partial class RemovedCardRefs
+    [Migration("20161206165532_AddedStashModels")]
+    partial class AddedStashModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,6 +30,8 @@ namespace ModelHovel.Migrations
                     b.Property<bool>("EmailConfirmed");
 
                     b.Property<string>("FirstName");
+
+                    b.Property<int>("ItemID");
 
                     b.Property<string>("LastName");
 
@@ -177,6 +179,51 @@ namespace ModelHovel.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("StashItem", b =>
+                {
+                    b.Property<int>("ItemID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Comments");
+
+                    b.Property<int>("ItemName");
+
+                    b.Property<string>("ItemNumber");
+
+                    b.Property<string>("ItemType");
+
+                    b.Property<int>("ListId");
+
+                    b.Property<string>("Manufacturer");
+
+                    b.Property<string>("Scale");
+
+                    b.HasKey("ItemID");
+
+                    b.HasIndex("ListId");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("StashList", b =>
+                {
+                    b.Property<int>("ItemID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
+
+                    b.HasKey("ItemID");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Lists");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -212,6 +259,21 @@ namespace ModelHovel.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("StashItem", b =>
+                {
+                    b.HasOne("StashList", "List")
+                        .WithMany("StashItems")
+                        .HasForeignKey("ListId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("StashList", b =>
+                {
+                    b.HasOne("ApplicationUser", "User")
+                        .WithMany("StashLists")
+                        .HasForeignKey("UserId1");
                 });
         }
     }

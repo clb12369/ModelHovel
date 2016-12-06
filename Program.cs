@@ -184,7 +184,7 @@ public partial class Handler {
                 break;
         }
 
-        RegisterRepos(services);
+        //RegisterRepos(services);
 
         switch(_swagger){
             case SwaggerOptions.JSON:
