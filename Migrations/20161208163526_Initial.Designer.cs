@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ModelHovel.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20161205202537_Initial")]
+    [Migration("20161208163526_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -179,6 +179,34 @@ namespace ModelHovel.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("StashItem", b =>
+                {
+                    b.Property<int>("ItemID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("ApplicationUserId");
+
+                    b.Property<string>("Comments");
+
+                    b.Property<string>("ItemName");
+
+                    b.Property<string>("ItemNumber");
+
+                    b.Property<string>("ItemType");
+
+                    b.Property<int>("ListId");
+
+                    b.Property<string>("Manufacturer");
+
+                    b.Property<string>("Scale");
+
+                    b.HasKey("ItemID");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("StashItem");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -214,6 +242,13 @@ namespace ModelHovel.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("StashItem", b =>
+                {
+                    b.HasOne("ApplicationUser")
+                        .WithMany("Stash")
+                        .HasForeignKey("ApplicationUserId");
                 });
         }
     }

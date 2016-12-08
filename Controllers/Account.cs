@@ -45,7 +45,7 @@ public class AccountController : Controller
 
         var errors = await auth.Register(user.FirstName, user.LastName, user.UserName, user.Email, user.Password, user.ModelingInterest);
         if((errors ?? new List<string>()).Count() == 0)
-            return Redirect("/members/{user.UserName}");
+            return Redirect("/members");
         
         foreach(var e in errors) ModelState.AddModelError("", e);
         return View("Register", user);

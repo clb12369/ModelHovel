@@ -38,18 +38,38 @@ public class HomeController : Controller
     [HttpGet]
     public IActionResult MemberDetails(string username)
     {
-        var user = db.Members.FirstOrDefault(m => m.UserName == username);
+        ApplicationUser user = 
+            db
+                .Members
+                .Include(x => x.Stash)
+                .FirstOrDefault(m => m.UserName == username);
         user.Log();
-        // ViewData["ApplicationUser"] = user;
         return View(user);
     }
 
-    [Route("members/{username}/stash")]
-    [HttpGet]
-    public IActionResult StashIndex()
-    {
-        return View(db.Lists.ToList()); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
+    // [Route("members/{username}/stash")]
+    // [HttpGet]
+    // public IActionResult StashIndex()
+    // {
+    //     return View(); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
+    // }
+
+    [HttpGet("members/{username}/stash/new")]
+    public IActionResult AddToStash(string username) {
+        return View();
     }
+
+    [HttpPost("members/{username}/stash/new")]
+    public IActionResult AddToStash([FromForm] StashItem item, string username) {
+        ApplicationUser user = db.Members.FirstOrDefault(m => m.UserName == username);
+        user.Log();
+        item.Log();
+        user.Stash.Add(item);
+        // item.Log();
+        db.SaveChanges();
+        return RedirectToAction("MemberDetails");
+    }
+
 
     // [Route("members/{username}/stash/{id}")]
     // [HttpGet]
@@ -59,21 +79,21 @@ public class HomeController : Controller
     //     return View(list);
     // }
 
-    [Route("members/{username}/stash/new")]
-    [HttpGet]
-    public IActionResult CreateStash(){
-        return View();
-    }
+    // [Route("members/{username}/stash/new")]
+    // [HttpGet]
+    // public IActionResult CreateStash(){
+    //     return View();
+    // }
 
-    [HttpPost]
-    public IActionResult CreateStash([FromForm] StashList list){
-        if (!ModelState.IsValid)
-            return View(list);
+    // [HttpPost]
+    // public IActionResult CreateStash([FromForm] StashList list){
+    //     if (!ModelState.IsValid)
+    //         return View(list);
 
-        db.Lists.Add(list);
-        db.SaveChanges();
-        return Redirect("/members/{username}/stash");
-    }
+    //     db.Lists.Add(list);
+    //     db.SaveChanges();
+    //     return Redirect("/members/{username}/stash");
+    // }
 
     // [Route("/members/{username}/stash/{id}/new")]
     // [HttpGet]

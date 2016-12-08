@@ -183,9 +183,11 @@ namespace ModelHovel.Migrations
                     b.Property<int>("ItemID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("ApplicationUserId");
+
                     b.Property<string>("Comments");
 
-                    b.Property<int>("ItemName");
+                    b.Property<string>("ItemName");
 
                     b.Property<string>("ItemNumber");
 
@@ -199,28 +201,9 @@ namespace ModelHovel.Migrations
 
                     b.HasKey("ItemID");
 
-                    b.HasIndex("ListId");
+                    b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Items");
-                });
-
-            modelBuilder.Entity("StashList", b =>
-                {
-                    b.Property<int>("ItemID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Title")
-                        .IsRequired();
-
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1");
-
-                    b.HasKey("ItemID");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Lists");
+                    b.ToTable("StashItem");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -262,17 +245,9 @@ namespace ModelHovel.Migrations
 
             modelBuilder.Entity("StashItem", b =>
                 {
-                    b.HasOne("StashList", "List")
-                        .WithMany("StashItems")
-                        .HasForeignKey("ListId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("StashList", b =>
-                {
-                    b.HasOne("ApplicationUser", "User")
-                        .WithMany("StashLists")
-                        .HasForeignKey("UserId1");
+                    b.HasOne("ApplicationUser")
+                        .WithMany("Stash")
+                        .HasForeignKey("ApplicationUserId");
                 });
         }
     }

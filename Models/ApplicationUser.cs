@@ -10,7 +10,7 @@ public class ApplicationUser : IdentityUser, HasId
     public string LastName { get; set; }
     public string ModelingInterest { get; set; }
     public int ItemID { get; set; }
-    public List<StashList> StashLists { get; set; } = new List<StashList>();
+    public List<StashItem> Stash { get; set; } = new List<StashItem>();
 
     // public void SetItemID(int value)
     // {
