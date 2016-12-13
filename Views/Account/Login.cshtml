@@ -1,19 +1,39 @@
 @model LoginView
-@{
-    var a = ViewBag.Action ?? "Register";
-}
 
-<form asp-controller="Account" asp-action="Login">
+@*@{
+    var a = ViewBag.Action ?? "Register";
+}*@
+
+@* <form asp-controller="Account" asp-action="Login">
 
     <div asp-validation-summary="All"></div>
 
-    <label asp-for="Email"></label>
-    <input asp-for="Email" />
-    <span asp-validation-for="Email"></span>
+    <label asp-for="UserName"></label>
+    <input asp-for="UserName" />
+    <span asp-validation-for="UserName"></span>
 
     <label asp-for="Password"></label>
     <input asp-for="Password" />
     <span asp-validation-for="Password"></span>
 
-    <button type="submit">Login</button>
-</form>
+    <button type="submit"class="btn btn-primary">Login</button>
+</form> *@
+
+<div class="container">
+    <form asp-controller="Account" asp-action="Login" class="form-signin">
+        <div asp-validation-summary="All" ></div>
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label asp-for="UserName">User Name:</label>
+        <input asp-for="UserName" class="form-control" autofocus placeholder="Please enter your username"/>
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" class="form-control" placeholder="Please enter your password"/>
+        <p>If this is your first time here, please <a href="/account/register">Register</a>.
+        @*<div class="checkbox">
+            <label>
+                <input type="checkbox" value="remember-me">
+                Remember me
+            </label>
+        </div>*@
+        <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
+    </form>
+</div>

@@ -21,7 +21,7 @@ public class StashItem : HasId
     public string ItemNumber { get; set; }
     public string Scale { get; set; }
     public string ItemName {get;set;}
-    public string Comments { get; set; }
+    public string Comments { get; set; } = "";
     public int ListId { get; set; }
 
     // public int UserID { get; set; }

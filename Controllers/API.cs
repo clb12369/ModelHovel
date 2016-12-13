@@ -3,8 +3,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 [Route("/api/members")]
-public class AccountAPIController : CRUDController<ApplicationUser> {
-    public AccountAPIController(IRepository<ApplicationUser> r) : base(r){}
+public class HomeAPIController : CRUDController<ApplicationUser> {
+    public HomeAPIController(IRepository<ApplicationUser> r, DB db) : base(r, db){}
 
 
 
