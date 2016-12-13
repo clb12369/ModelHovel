@@ -1,20 +1,67 @@
 @model ApplicationUser
 
-<h2>Member Details</h2>
+<div class="grid grid-2-500">
+    <div class="member-details">
+        <h2>Member Details</h2>
 
+        <h3>@Model.UserName</h3>
 
+        <h4>Your Stash</h4>
 
-<h3>@Model.UserName</h3>
+        <a type="button" class="btn btn-sm btn-primary" href="/members/@Model.UserName/stash/new">Add to Stash</a> 
+    </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="custom-search col-md-12">
+                <h3>Find more kits for your stash!</h3>
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg" placeholder="Search for kits!" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-lg btn-primary" type="button">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<a href="/mmembers/@(Model.UserName)/stash/new"><button type="submit">Create Stash</button></a>
+<p>There are currently @Model.Stash.Count() items in your stash.</p>
 
-
-
-
-
-
-
-
-
-
+<table class="table table-condensed table-striped table-bordered stash-table">
+    <tr>
+        <th class="text-center">Name</th>
+        <th class="text-center">Type</th>
+        <th class="text-center">Scale</th>
+        <th class="text-center">Manufacturer</th>
+        <th class="text-center">Kit Number</th>
+        <th class="text-center">Comments</th>
+        <th class="text-center">Manage Items</th>
+    </tr>
+    @foreach(var item in Model.Stash){
+        <tr>
+            <td>@item.ItemName</td>
+            <td>@item.ItemType</td>
+            <td>@item.Scale</td>
+            <td>@item.Manufacturer</td>
+            <td>@item.ItemNumber</td>
+            <td>@item.Comments</td>
+            <td>
+                <div>
+                    @*<a asp-action="EditStashItem" class="btn btn-sm btn-primary" asp-route-id="@item.ItemID">Edit</a>*@
+                    <form action="/members/@Model.UserName/stash/@item.ItemID/delete" method="POST">
+                        <a asp-action="EditStashItem" class="btn btn-sm btn-primary" asp-route-id="@item.ItemID">Edit</a>
+                        @* <a type="button" class="btn btn-sm btn-primary" href="/members/@Model.UserName/stash/@item.ItemID/edit" method="get">Edit Item</a>*@
+                        @* <input type="hidden" name="ItemID" value="@item.ItemID"/> *@
+                        <button type="submit" class="btn btn-sm btn-danger">Delete Item</button>
+                        @* <a type="button" class="btn btn-sm btn-danger" href="/members/@Model.UserName/stash/@item.ItemID/delete" method="post">Delete Item</a> *@
+                    </form>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

@@ -1,19 +1,22 @@
 @model StashItem
 
-<form asp-controller="Home" asp-action="AddToStash">
+<div class="bg-primary panel-body"><h4>Edit Item Details</h4></div>
+
+@* <form asp-controller="Home" asp-action="EditStashItem" @asp-route-id="@Model.ItemID"> *@
+<form asp-controller="Home" asp-action="EditStashItem" method="post">
 
     <div asp-validation-summary="All"></div>
     <div class="form-group">
         <label asp-for="ItemName" class="col-md-2 control-label">Name</label>
-        <input asp-for="ItemName" class="form-control" value=""/>
+        <input asp-for="ItemName" class="form-control" placeholder="@Model.ItemName"/>
         <span asp-validation-for="ItemName"></span>
     </div>
     <div class="form-group">
         <label asp-for="Scale" class="col-md-2 control-label"></label>
-        <input asp-for="Scale" class="form-control"/>
+        <input asp-for="Scale" class="form-control" placeholder="@Model.Scale"/>
         <span asp-validation-for="Scale"></span>
     </div>
-        <select asp-for="ItemType" class="form-control" placeholder="Select Genre">
+        <select asp-for="ItemType" class="form-control" placeholder="@Model.ItemType">
         <option>Aircraft</option>
         <option>Armor</option>
         <option>Naval</option>
@@ -22,21 +25,23 @@
     </select>
     <div class="form-group">
         <label asp-for="Manufacturer" class="col-md-2 control-label"></label>
-        <input asp-for="Manufacturer" class="form-control"/>
+        <input asp-for="Manufacturer" class="form-control" placeholder="@Model.Manufacturer"/>
         <span asp-validation-for="Manufacturer"></span>
     </div>
     <div class="form-group">
         <label asp-for="ItemNumber"class="col-md-2 control-label">Mfr. Number</label>
-        <input asp-for="ItemNumber" class="form-control"/>
+        <input asp-for="ItemNumber" class="form-control" placeholder="@Model.ItemNumber"/>
         <span asp-validation-for="ItemNumber"></span>
     </div>
     <div class="form-group">
         <label asp-for="Comments" class="col-md-2 control-label"></label>
-        <textarea asp-for="Comments" class="form-control"></textarea>
+        <textarea asp-for="Comments" class="form-control" placeholder="@Model.Comments"></textarea>
         <span asp-validation-for="Comments"></span>
     </div>
+    <input type="hidden" asp-for="ItemID" />
+    @* <input type="hidden" asp-for="ApplicationUserId" /> *@
     <div class="text-center">
-        <button type="submit"class="btn btn-primary text-center">Add Item</button>
-        <a asp-action="MemberDetails" class="btn btn-default">Cancel</a>
+        <button type="submit"class="btn btn-primary text-center">Save Item</button>
+        <button asp-controller="Home" asp-action="MemberDetails" class="btn btn-default">Cancel</button>
     </div>
 </form>

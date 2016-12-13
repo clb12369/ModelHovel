@@ -107,6 +107,32 @@ namespace ModelHovel.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "StashItem",
+                columns: table => new
+                {
+                    ItemID = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGeneratedOnAdd", true),
+                    ApplicationUserId = table.Column<string>(nullable: true),
+                    Comments = table.Column<string>(nullable: true),
+                    ItemName = table.Column<string>(nullable: true),
+                    ItemNumber = table.Column<string>(nullable: true),
+                    ItemType = table.Column<string>(nullable: true),
+                    ListId = table.Column<int>(nullable: false),
+                    Manufacturer = table.Column<string>(nullable: true),
+                    Scale = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StashItem", x => x.ItemID);
+                    table.ForeignKey(
+                        name: "FK_StashItem_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -191,6 +217,11 @@ namespace ModelHovel.Migrations
                 name: "IX_AspNetUserRoles_UserId",
                 table: "AspNetUserRoles",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StashItem_ApplicationUserId",
+                table: "StashItem",
+                column: "ApplicationUserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,6 +240,9 @@ namespace ModelHovel.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "StashItem");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

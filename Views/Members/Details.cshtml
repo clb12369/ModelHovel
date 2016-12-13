@@ -2,13 +2,32 @@
 
 <h2>Member Details</h2>
 
-
-
 <h3>@Model.UserName</h3>
 
+<h4>Your Stash</h4>
 
-<a href="/mmembers/@(Model.UserName)/stash/new"><button type="submit">Create Stash</button></a>
+<p>There are currently @Model.Stash.Count() items in your stash.</p>
 
+<table class="table table-condensed table-striped table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Scale</th>
+        <th>Manufacturer</th>
+        <th>Manuf. Number</th>
+        <th>Comments</th>
+    </tr>
+    @foreach(var item user in Model.List){
+        <tr>
+            <td>@item.Name</a></td>
+            <td>@item.ItemType</td>
+            <td>@item.Scale</td>
+            <td>@item.Manufacturer</td>
+            <td>@item.ItemNumber</td>
+            <td>@item.Comments</td>
+        </tr>
+    }
+</table>
 
 
 

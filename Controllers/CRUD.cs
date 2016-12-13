@@ -22,8 +22,10 @@ DELETE /api/todo/{id}   Delete an item.         None                    None
 public abstract class CRUDController<T> : Controller where T: class, HasId
 {
     protected IRepository<T> r;
-    public CRUDController(IRepository<T> r){
+    protected DB db;
+    public CRUDController(IRepository<T> r, DB db){
         this.r = r;
+        this.db = db;
     }
 
     [HttpPost]

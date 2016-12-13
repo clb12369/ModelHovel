@@ -17,11 +17,13 @@ using Microsoft.EntityFrameworkCore;
 public class AccountController : Controller
 {
     private readonly IAuthService auth;
-    public AccountController(IAuthService auth){
+    private DB db;
+    public AccountController(IAuthService auth, DB db){
         this.auth = auth;
+        this.db = db;
     }
 
-    [HttpGet]
+    // [HttpGet]
     // public IActionResult Root()
     // {
     //     // HttpContext.User
@@ -40,15 +42,15 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Register([FromForm] RegisterView user)
     {
-        // ViewData["Action"] = "Register";
+        ViewData["Action"] = "Register";
         if(!ModelState.IsValid) return View(user);
 
         var errors = await auth.Register(user.FirstName, user.LastName, user.UserName, user.Email, user.Password, user.ModelingInterest);
         if((errors ?? new List<string>()).Count() == 0)
-            return Redirect("/members/{user.UserName}");
+            return RedirectToAction("MemberIndex", "Home");
         
         foreach(var e in errors) ModelState.AddModelError("", e);
-        return View("Register", user);
+        return View(user);
     }
 
     [HttpGet("login")]
@@ -63,24 +65,61 @@ public class AccountController : Controller
     [AllowAnonymous]
     public async Task<IActionResult> Login([FromForm] LoginView user)
     {
-        // ViewData["Action"] = "Login";
+        ViewData["Action"] = "Login";
 
         if (!ModelState.IsValid) return View("Login", user);
 
         string result = await auth.Login(user.UserName, user.Password);
         if(result == null){
-            return View("Register");
+            return View("MemberIndex", "Home");
         }
 
         ModelState.AddModelError("", result);
-        return View("MemberDetails", user);
+        return RedirectToAction("MemberIndex", "Home");
     }
 
-    [HttpGet("logout")]
+    // [HttpPost("/")]
     public async Task<IActionResult> Logout()
     {
         await auth.Logout();
-        return Redirect("/");
+        return RedirectToAction("Index", "Home");
+    }
+
+
+    [HttpGet("{username}/edit")]
+    public IActionResult Edit(string username){
+        ApplicationUser user = db.Users.FirstOrDefault(u => u.UserName == username);
+        
+        if (user != null)
+        {
+            return View(user);
+        }
+        return NotFound();
+    }
+
+    [HttpPost("{username}/edit")]
+    public IActionResult Edit([FromForm] RegisterView user, string id){
+        ApplicationUser userToUpdate = db.Members.FirstOrDefault(u => u.Id == id);
+        if (userToUpdate != null){
+            userToUpdate.FirstName = user.FirstName;
+            userToUpdate.LastName = user.LastName;
+            userToUpdate.UserName = user.UserName;
+            userToUpdate.Email = user.Email;
+            userToUpdate.ModelingInterest = user.ModelingInterest;
+            db.SaveChanges();
+        }
+        userToUpdate.Log();
+        return RedirectToAction("MemberDetails");
+    }
+
+    [HttpPost("/account/{username}/delete")]
+    public IActionResult DeleteAccount(string username){
+        ApplicationUser user = db.Users.FirstOrDefault(u => u.UserName == username);
+        if (user != null){
+            db.Users.Remove(user);
+            db.SaveChanges();
+        }
+        return Redirect($"/members");
     }
 }
 

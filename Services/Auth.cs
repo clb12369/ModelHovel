@@ -16,6 +16,7 @@ public interface IAuthService {
     Task<string> Login(string email, string pass);
     Task Logout();
     Task<IEnumerable<string>> Register(string firstname, string lastname, string username, string email, string pass, string modelingInterest);
+    // Task<IEnumerable<string>> Edit(string firstname, string lastname, string username, string email, string pass, string modelingInterest);
     Task<bool> ResetPassword(string email, Func<Object, string> getCallbackUrl);
     Task<ApplicationUser> GetUser(HttpContext context);
 }
@@ -55,6 +56,13 @@ public class AuthService : IAuthService {
             return errors;
         }
     }
+
+
+    // public async Task<IEnumerable<string>> Edit(string firstname, string lastname, string username, string email, string pass, string modelingInterest)
+    // {
+    //     var user = await u.FindByIdAsync(string Id)
+
+    // }
 
     public async Task Logout() => await s.SignOutAsync();
 
