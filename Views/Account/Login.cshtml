@@ -27,13 +27,15 @@
         <input asp-for="UserName" class="form-control" autofocus placeholder="Please enter your username"/>
         <label asp-for="Password">Password:</label>
         <input asp-for="Password" class="form-control" placeholder="Please enter your password"/>
-        <p>If this is your first time here, please <a href="/account/register">Register</a>.
+        <div>
+            <p>If this is your first time here, please <a href="/account/register">Register</a>.
+        </div>
         @*<div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me">
                 Remember me
             </label>
         </div>*@
-        <button type="submit" class="btn btn-lg btn-primary">Sign in</button>
+        <button type="submit" class="btn btn-sm btn-primary">Sign in</button>
     </form>
 </div>

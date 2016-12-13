@@ -71,11 +71,14 @@ public class AccountController : Controller
 
         string result = await auth.Login(user.UserName, user.Password);
         if(result == null){
-            return View("MemberIndex", "Home");
+            return RedirectToAction("MemberIndex", "Home");
+            // return View("Register", user);
         }
 
         ModelState.AddModelError("", result);
-        return RedirectToAction("MemberIndex", "Home");
+        // return RedirectToAction("MemberIndex", "Home");
+        //return View("MemberDetails", user);
+        return View("Login", user);
     }
 
     // [HttpPost("/")]
@@ -83,43 +86,6 @@ public class AccountController : Controller
     {
         await auth.Logout();
         return RedirectToAction("Index", "Home");
-    }
-
-
-    [HttpGet("{username}/edit")]
-    public IActionResult Edit(string username){
-        ApplicationUser user = db.Users.FirstOrDefault(u => u.UserName == username);
-        
-        if (user != null)
-        {
-            return View(user);
-        }
-        return NotFound();
-    }
-
-    [HttpPost("{username}/edit")]
-    public IActionResult Edit([FromForm] RegisterView user, string id){
-        ApplicationUser userToUpdate = db.Members.FirstOrDefault(u => u.Id == id);
-        if (userToUpdate != null){
-            userToUpdate.FirstName = user.FirstName;
-            userToUpdate.LastName = user.LastName;
-            userToUpdate.UserName = user.UserName;
-            userToUpdate.Email = user.Email;
-            userToUpdate.ModelingInterest = user.ModelingInterest;
-            db.SaveChanges();
-        }
-        userToUpdate.Log();
-        return RedirectToAction("MemberDetails");
-    }
-
-    [HttpPost("/account/{username}/delete")]
-    public IActionResult DeleteAccount(string username){
-        ApplicationUser user = db.Users.FirstOrDefault(u => u.UserName == username);
-        if (user != null){
-            db.Users.Remove(user);
-            db.SaveChanges();
-        }
-        return Redirect($"/members");
     }
 }
 

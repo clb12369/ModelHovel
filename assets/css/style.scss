@@ -37,6 +37,17 @@
     display: inline-block;
 }
 
+
+.intro {
+    padding-top: 10px;
+    text-align: center;
+}
+
+.members-table {
+    padding-top: 200px;
+}
+
+
 @define-mixin grid_r $col, $width {
         @media (min-width: $(width)px) {
                 .grid-$(col)-$(width) {
