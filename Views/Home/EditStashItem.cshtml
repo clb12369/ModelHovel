@@ -2,7 +2,9 @@
 
 <div class="bg-primary panel-body"><h4>Edit Item Details</h4></div>
 
-@* <form asp-controller="Home" asp-action="EditStashItem" @asp-route-id="@Model.ItemID"> *@
+<hr/>
+
+<div class="container">
 <form asp-controller="Home" asp-action="EditStashItem" method="post">
 
     <div asp-validation-summary="All"></div>
@@ -39,9 +41,9 @@
         <span asp-validation-for="Comments"></span>
     </div>
     <input type="hidden" asp-for="ItemID" />
-    @* <input type="hidden" asp-for="ApplicationUserId" /> *@
     <div class="text-center">
         <button type="submit"class="btn btn-primary text-center">Save Item</button>
         <button asp-controller="Home" asp-action="MemberDetails" class="btn btn-default">Cancel</button>
     </div>
 </form>
+</div>

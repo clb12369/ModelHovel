@@ -11,17 +11,10 @@ using System.ComponentModel.DataAnnotations;
 [Route("/")]
 public class HomeController : Controller
 {
-    // DbSet<ApplicationUser> users;
     private DB db;
     public HomeController(DB db){
         this.db = db;
     }
-
-    // [HttpGet]
-    // public IActionResult Index()
-    // {
-    //     return View(); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
-    // }
 
     [AllowAnonymous]
     [HttpGet]
@@ -56,12 +49,6 @@ public class HomeController : Controller
         return View(user);
     }
 
-    // [Route("members/{username}/stash")]
-    // [HttpGet]
-    // public IActionResult StashIndex()
-    // {
-    //     return View(); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
-    // }
 
     [HttpGet("members/{username}/stash/new")]
     public IActionResult AddToStash(string username) => View();
@@ -86,7 +73,7 @@ public class HomeController : Controller
         // var itemToUpdate = user.Stash.FirstOrDefault(i => i.ItemID == id);
         // StashItem item = user.Stash.FirstOrDefault(i => i.ItemID == id);
         StashItem item = db.Items.FirstOrDefault(i => i.ItemID == id);
-        item.Log();
+        // item.Log();
         return View(item);
     }
 
@@ -104,7 +91,7 @@ public class HomeController : Controller
             itemToUpdate.Comments = item.Comments;
             db.SaveChanges();
         }
-        itemToUpdate.Log();
+        // itemToUpdate.Log();
         return RedirectToAction("MemberDetails");
     }
 
@@ -157,7 +144,7 @@ public class HomeController : Controller
             userToUpdate.ModelingInterest = user.ModelingInterest;
             db.SaveChanges();
         }
-        userToUpdate.Log();
+        // userToUpdate.Log();
         return RedirectToAction("MemberDetails");
     }
 

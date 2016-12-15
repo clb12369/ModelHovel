@@ -18,10 +18,10 @@
                     @if (item.pagemap == null){
                         <p>No photo</p>
                     } else {
-                        <a href="@item.link"><img src="@item.pagemap.cse_thumbnail[0].src" alt="@item.displayLink" /></a>
+                        <a href="@item.link"target="_blank"><img src="@item.pagemap.cse_thumbnail[0].src" alt="@item.displayLink" /></a>
                     }
             </div>
-        <a href=@item.link type="button"class="btn btn-success">Find in Store</a>
+        <a href=@item.link target="_blank" type="button"class="btn btn-success">Find in Store</a>
     </div>
 }
 </div>
