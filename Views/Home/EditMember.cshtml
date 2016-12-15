@@ -2,46 +2,48 @@
 
 <div class="bg-primary panel-body"><h4>Edit Account Details</h4></div>
 
-<form asp-controller="Account" asp-action="Edit" asp-route-id="@Model.UserName">
+<div class="container">
+    <form asp-controller="Account" asp-action="Edit" asp-route-id="@Model.UserName">
 
-    <div asp-validation-summary="All"></div>
-    <div class="form-group">
-        <label asp-for="FirstName" class="col-md-2 control-label"></label>
-        <input asp-for="FirstName" class="form-control" value="@Model.FirstName"/>
-        <span asp-validation-for="FirstName"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="LastName" class="col-md-2 control-label"></label>
-        <input asp-for="LastName" class="form-control" value="@Model.LastName"/>
-        <span asp-validation-for="LastName"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="UserName" class="col-md-2 control-label"></label>
-        <input asp-for="UserName" class="form-control" value="@Model.UserName"/>
-        <span asp-validation-for="UserName"></span>
-    </div>
-    <select asp-for="ModelingInterest" class="form-control" placeholder="Select Main Interest">
-        <option>Aircraft</option>
-        <option>Armor</option>
-        <option>Naval</option>
-        <option>Cars &amp; Trucks</option>
-        <option>Dioramas</option>
-    </select>
-    <div class="form-group">
-        <label asp-for="Email"class="col-md-2 control-label"></label>
-        <input asp-for="Email" class="form-control" value="@Model.Email"/>
-        <span asp-validation-for="Email"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password" class="col-md-2 control-label"></label>
-        <input asp-for="Password" class="form-control"/>
-        <span asp-validation-for="Password"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
-        <input asp-for="ConfirmPassword" class="form-control"/>
-        <span asp-validation-for="ConfirmPassword"></span>
-    </div>
-    <input asp-for="Id" type="hidden"/>
-    <button type="submit"class="btn btn-primary text-center">Save Changes</button>
-</form>
+        <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="FirstName" class="col-md-2 control-label"></label>
+            <input asp-for="FirstName" class="form-control" value="@Model.FirstName"/>
+            <span asp-validation-for="FirstName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="LastName" class="col-md-2 control-label"></label>
+            <input asp-for="LastName" class="form-control" value="@Model.LastName"/>
+            <span asp-validation-for="LastName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserName" class="col-md-2 control-label"></label>
+            <input asp-for="UserName" class="form-control" value="@Model.UserName"/>
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <select asp-for="ModelingInterest" class="form-control" placeholder="Select Main Interest">
+            <option>Aircraft</option>
+            <option>Armor</option>
+            <option>Naval</option>
+            <option>Cars &amp; Trucks</option>
+            <option>Dioramas</option>
+        </select>
+        <div class="form-group">
+            <label asp-for="Email"class="col-md-2 control-label"></label>
+            <input asp-for="Email" class="form-control" value="@Model.Email"/>
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password" class="col-md-2 control-label"></label>
+            <input asp-for="Password" class="form-control"/>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ConfirmPassword" class="col-md-2 control-label"></label>
+            <input asp-for="ConfirmPassword" class="form-control"/>
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
+        <input asp-for="Id" type="hidden"/>
+        <button type="submit"class="btn btn-primary text-center">Save Changes</button>
+    </form>
+</div>

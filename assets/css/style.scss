@@ -47,6 +47,12 @@
     padding-top: 200px;
 }
 
+.well {
+    img {
+        display: inline-block;
+    }
+}
+
 
 @define-mixin grid_r $col, $width {
         @media (min-width: $(width)px) {
