@@ -129,7 +129,16 @@ public class HomeController : Controller
         
         if (user != null)
         {
-            return View(user);
+            return View(new EditMemberView {
+                
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
+                ModelingInterest = user.ModelingInterest
+
+                ///.!--.!--.
+            });
         }
         return NotFound();
     }
@@ -139,7 +148,8 @@ public class HomeController : Controller
     public IActionResult EditMember([FromForm] EditMemberView user, string username){
         var userToUpdate = db.Members.FirstOrDefault(u => u.UserName == username);
         if (userToUpdate != null){
-            // userToUpdate.Id == userToUpdate.Id;
+            db.Members.Remove(userToUpdate);
+            userToUpdate.Id = user.Id;
             userToUpdate.FirstName = user.FirstName;
             userToUpdate.LastName = user.LastName;
             userToUpdate.UserName = user.UserName;
@@ -192,4 +202,12 @@ public class EditMemberView
     public string Id { get; }
 
     public string ItemID { get; set; }
+
+    // public static EditMemberView FromUser(ApplicationUser u){
+    //     return new EditMemberView{};
+    // }
+
+    // public static ApplicationUser FromVM(EditMemberView v){
+    //     return new ApplicationUser{};
+    // }
 }

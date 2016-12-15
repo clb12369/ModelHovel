@@ -1,8 +1,15 @@
 @model ApplicationUser
+@* @model MemberDetailsViewModel *@
+@* @Model.user, @Model.googleResult *@
+
+<div class="bg-primary panel-body">
+    <h4>Member Details</h4>
+</div>
+<hr/>
+
 
 <div class="container grid grid-2-500">
     <div class="member-details">
-        <h2>Member Details</h2>
 
         <h3>@Model.UserName</h3>
         <p><strong>Modeling Interest:</strong> @Model.ModelingInterest</p>
@@ -10,22 +17,29 @@
     </div>
 
     <div class="container">
+        @Html.Partial("~/Views/Search/GoogleSearch.cshtml", new GoogleSearch())
+    </div>
+
+    @*<div class="container">
         <div class="row">
             <div class="custom-search col-md-12">
                 <h3>Find more kits for your stash!</h3>
                 <div id="custom-search-input">
                     <div class="input-group col-md-12">
-                        <input type="text" class="form-control input-lg" placeholder="Search for kits!" />
-                        <span class="input-group-btn">
-                            <button class="btn btn-lg btn-primary" type="button">
-                                GO!
-                            </button>
-                        </span>
+                        <form asp-controller="Search" asp-for="SearchResults" method="GET">
+
+                            <input asp-for="searchTerm" class="form-control input-lg" placeholder="Search for kits!" />
+                            <span class="input-group-btn">
+                                <a href="/search/results" class="btn btn-lg btn-primary" type="submit">
+                                    GO!
+                                </a>
+                            </span>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> *@
 </div>
 
 <div class="container">
