@@ -3,11 +3,19 @@
     <h1>Hello @ViewBag.Username from a view</h1>
     <!--<p>@Model</p>-->
 <!--</div>-->
-<h2>The ModelHovel</h2>
 
-<p>Welcome to the ModelHovel</p>
+<div class="index-page">
+    <div class="intro">
+        <h2>The ModelHovel</h2>
 
-@* @Html.Partial("Login", "Account") *@
+        <h4>Welcome to the ModelHovel</h4>
+    </div>
+        @Html.Partial("~/Views/Account/Login.cshtml")
+
+    </div>
+</div>
+
+@*@Html.Partial("~/Views/Account/Login.cshtml")*@
 @*
 Examples:
 -------------

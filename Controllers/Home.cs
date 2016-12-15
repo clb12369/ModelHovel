@@ -4,7 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Http;
 using System;
+using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
 
+[Authorize]
 [Route("/")]
 public class HomeController : Controller
 {
@@ -14,18 +17,24 @@ public class HomeController : Controller
         this.db = db;
     }
 
-    [HttpGet]
+    // [HttpGet]
     // public IActionResult Index()
     // {
     //     return View(); // View(new Student) method takes an optional object as a "model", typically called a ViewModel
     // }
 
+    [AllowAnonymous]
     [HttpGet]
     public IActionResult Index()
     {
         return View();
     }
 
+    [AllowAnonymous]
+    [HttpGet("/about")]
+    public IActionResult About() => View();
+
+    [AllowAnonymous]
     [Route("members")]
     [HttpGet]
     public IActionResult MemberIndex()
@@ -120,16 +129,27 @@ public class HomeController : Controller
         
         if (user != null)
         {
-            return View(user);
+            return View(new EditMemberView {
+                
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email,
+                ModelingInterest = user.ModelingInterest
+
+                ///.!--.!--.
+            });
         }
         return NotFound();
     }
 
     
     [HttpPost("members/{username}/edit")]
-    public IActionResult EditMember([FromForm] RegisterView user, string username){
-        ApplicationUser userToUpdate = db.Members.FirstOrDefault(u => u.UserName == username);
+    public IActionResult EditMember([FromForm] EditMemberView user, string username){
+        var userToUpdate = db.Members.FirstOrDefault(u => u.UserName == username);
         if (userToUpdate != null){
+            db.Members.Remove(userToUpdate);
+            userToUpdate.Id = user.Id;
             userToUpdate.FirstName = user.FirstName;
             userToUpdate.LastName = user.LastName;
             userToUpdate.UserName = user.UserName;
@@ -141,56 +161,53 @@ public class HomeController : Controller
         return RedirectToAction("MemberDetails");
     }
 
+    [HttpPost("/members/{username}/delete")]
+    public IActionResult DeleteMember(string username){
+        ApplicationUser user = db.Users.FirstOrDefault(u => u.UserName == username);
+        if (user != null){
+            db.Users.Remove(user);
+            db.SaveChanges();
+        }
+        return Redirect($"/members");
+    }
+}
 
+public class EditMemberView
+{
+    [Required]
+    [Display(Name = "First Name")]
+    public string FirstName { get; set; }
+    [Required]
+    [Display(Name = "Last Name")]
+    public string LastName { get; set; }
+    [Required]
+    [Display(Name = "Username")]
+    public string UserName { get; set; }
+    [Required]
+    [Display(Name = "Email Address")]
+    [EmailAddress]
+    public string Email { get; set; }
+    [Required]
+    [Display(Name = "Password")]
+    [DataType(DataType.Password)]
+    public string Password { get; set; }
+    [Required]
+    [Display(Name = "Confirm Password")]
+    [DataType(DataType.Password)]
+    [Compare("Password", ErrorMessage = "The passwords do not match.")]
+    public string ConfirmPassword { get; set; }
+    [Display(Name = "Main Interests")]
+    public string ModelingInterest { get; set; }
 
+    public string Id { get; }
 
-    // [Route("members/{username}/stash/{id}")]
-    // [HttpGet]
-    // public IActionResult StashDetails(int id)
-    // {
-    //     var list = db.Lists.FirstOrDefault(m => m.ItemID == id);
-    //     return View(list);
+    public string ItemID { get; set; }
+
+    // public static EditMemberView FromUser(ApplicationUser u){
+    //     return new EditMemberView{};
     // }
 
-    // [Route("members/{username}/stash/new")]
-    // [HttpGet]
-    // public IActionResult CreateStash(){
-    //     return View();
+    // public static ApplicationUser FromVM(EditMemberView v){
+    //     return new ApplicationUser{};
     // }
-
-    // [HttpPost]
-    // public IActionResult CreateStash([FromForm] StashList list){
-    //     if (!ModelState.IsValid)
-    //         return View(list);
-
-    //     db.Lists.Add(list);
-    //     db.SaveChanges();
-    //     return Redirect("/members/{username}/stash");
-    // }
-
-    // [Route("/members/{username}/stash/{id}/new")]
-    // [HttpGet]
-    // public IActionResult AddToStash() {
-    //     return View();
-    // }
-
-    // [Route("members/{username}/stash/{id}/new")]
-    // [HttpPost]
-    // public IActionResult AddToStash([FromForm] StashItem item, string username, int id){
-    //     ApplicationUser user = db.Members.FirstOrDefault(m => m.UserName == username);
-    //     StashList list = user.StashLists.FirstOrDefault(l => l.ItemID == id);
-    //     TryValidateModel(item);
-
-    //     if (ModelState.IsValid)
-    //     {
-    //         user.list.Add(item);
-    //         db.SaveChanges();
-    //     }
-    //     return Redirect($"/members/{username}"); 
-    // }
-
-
-
-
-
 }

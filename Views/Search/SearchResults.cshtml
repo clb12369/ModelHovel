@@ -1,0 +1,28 @@
+@model GoogleRootObject
+
+<div class="bg-primary panel-body">
+    <h4>Search Results</h4>
+</div>
+<hr/>
+<div class="text-center">
+    <h3>You searched the following term(s):<h3>
+    <p><strong>@Model.queries.request[0].searchTerms</strong></p> 
+</div>
+@* There were @Model.queries.request[0].totalResults items found for @Model.queries.request[0].searchTerms *@
+<div class="container">
+@foreach (var item in Model.items) {
+    <div class="well text-center">
+        <h3><strong>@item.title</h3>
+            @*<div class="pull-right">*@
+            <div>  
+                    @if (item.pagemap == null){
+                        <p>No photo</p>
+                    } else {
+                        <a href="@item.link"><img src="@item.pagemap.cse_thumbnail[0].src" alt="@item.displayLink" /></a>
+                    }
+            </div>
+        <a href=@item.link type="button"class="btn btn-success">Find in Store</a>
+    </div>
+}
+</div>
+    

@@ -1,42 +1,44 @@
 @model StashItem
 
-<form asp-controller="Home" asp-action="AddToStash">
+<div class="container">
+    <form asp-controller="Home" asp-action="AddToStash">
 
-    <div asp-validation-summary="All"></div>
-    <div class="form-group">
-        <label asp-for="ItemName" class="col-md-2 control-label">Name</label>
-        <input asp-for="ItemName" class="form-control" value=""/>
-        <span asp-validation-for="ItemName"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Scale" class="col-md-2 control-label"></label>
-        <input asp-for="Scale" class="form-control"/>
-        <span asp-validation-for="Scale"></span>
-    </div>
-        <select asp-for="ItemType" class="form-control" placeholder="Select Genre">
-        <option>Aircraft</option>
-        <option>Armor</option>
-        <option>Naval</option>
-        <option>Cars, Trucks, &amp; Motorcycles</option>
-        <option>Diorama</option>
-    </select>
-    <div class="form-group">
-        <label asp-for="Manufacturer" class="col-md-2 control-label"></label>
-        <input asp-for="Manufacturer" class="form-control"/>
-        <span asp-validation-for="Manufacturer"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ItemNumber"class="col-md-2 control-label">Mfr. Number</label>
-        <input asp-for="ItemNumber" class="form-control"/>
-        <span asp-validation-for="ItemNumber"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Comments" class="col-md-2 control-label"></label>
-        <textarea asp-for="Comments" class="form-control"></textarea>
-        <span asp-validation-for="Comments"></span>
-    </div>
-    <div class="text-center">
-        <button type="submit"class="btn btn-primary text-center">Add Item</button>
-        <a asp-action="MemberDetails" class="btn btn-default">Cancel</a>
-    </div>
-</form>
+        <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label asp-for="ItemName" class="col-md-2 control-label">Name</label>
+            <input asp-for="ItemName" class="form-control" value=""/>
+            <span asp-validation-for="ItemName"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Scale" class="col-md-2 control-label"></label>
+            <input asp-for="Scale" class="form-control"/>
+            <span asp-validation-for="Scale"></span>
+        </div>
+            <select asp-for="ItemType" class="form-control" placeholder="Select Genre">
+            <option>Aircraft</option>
+            <option>Armor</option>
+            <option>Naval</option>
+            <option>Cars, Trucks, &amp; Motorcycles</option>
+            <option>Diorama</option>
+        </select>
+        <div class="form-group">
+            <label asp-for="Manufacturer" class="col-md-2 control-label"></label>
+            <input asp-for="Manufacturer" class="form-control"/>
+            <span asp-validation-for="Manufacturer"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="ItemNumber"class="col-md-2 control-label">Mfr. Number</label>
+            <input asp-for="ItemNumber" class="form-control"/>
+            <span asp-validation-for="ItemNumber"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Comments" class="col-md-2 control-label"></label>
+            <textarea asp-for="Comments" class="form-control"></textarea>
+            <span asp-validation-for="Comments"></span>
+        </div>
+        <div class="text-center">
+            <button type="submit"class="btn btn-primary text-center">Add Item</button>
+            <a asp-action="MemberDetails" class="btn btn-default">Cancel</a>
+        </div>
+    </form>
+</div>
