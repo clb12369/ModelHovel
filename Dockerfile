@@ -1,7 +1,7 @@
-FROM microsoft/dotnet:latest
+FROM microsoft/dotnet:1.0.3-sdk-projectjson
 
 RUN apt-get -qq update && apt-get -qqy --no-install-recommends install git unzip
-RUN curl -sL https://deb.nodesource.com/setup_6.x |  bash -
+RUN curl -sL https://deb.nodesource.com/setup_7.x |  bash -
 RUN apt-get install -y nodejs build-essential
 
 LABEL name "dotnetcore-boilerplate"
