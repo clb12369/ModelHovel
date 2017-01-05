@@ -4,12 +4,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-
 namespace ModelHovel.Migrations
 {
     [DbContext(typeof(DB))]
-    [Migration("20161212164545_ChangedStashItemModel")]
-    partial class ChangedStashItemModel
+    [Migration("20170105193637_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
